@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Layout } from 'antd';
+import { Layout, DatePicker } from 'antd';
 import './App.css';
 import Intro from '../components/Intro';
-import { addPreference } from '../actions/user';
+import { addPreference, setDates } from '../actions/user';
 import { routeToPage } from '../actions/routing';
 import { nextQuestion } from '../actions/questions';
 
 const { Content } = Layout;
+const { RangePicker } = DatePicker;
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.answerCallback = this.answerCallback.bind(this);
+    this.dateChanged = this.dateChanged.bind(this);
   }
 
   answerCallback(answer) {
@@ -23,9 +25,13 @@ class App extends Component {
       this.props.addPreference(answer);
     }
     if (current + 1 === maxQuestions) {
-      this.props.routeToPage('home');
+      this.props.routeToPage('date');
     }
     this.props.nextQuestion();
+  }
+
+  dateChanged(dates, dateStrings) {
+    this.props.setDates(dateStrings);
   }
 
   render() {
@@ -39,6 +45,18 @@ class App extends Component {
         <Layout>
           <Content style={{ height: '100vh' }}>
             {page === 'intro' && <Intro questions={questions} answer={this.answerCallback} />}
+            {page === 'date' && (
+              <div
+                style={{
+                  height: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <RangePicker onChange={this.dateChanged} />
+              </div>
+            )}
           </Content>
         </Layout>
       </div>
@@ -56,6 +74,7 @@ const mapDispatchToProps = dispatch => ({
   addPreference: preference => dispatch(addPreference(preference)),
   routeToPage: page => dispatch(routeToPage(page)),
   nextQuestion: () => dispatch(nextQuestion()),
+  setDates: dates => dispatch(setDates(dates)),
 });
 
 App.propTypes = {
@@ -66,6 +85,7 @@ App.propTypes = {
   addPreference: PropTypes.func.isRequired,
   routeToPage: PropTypes.func.isRequired,
   nextQuestion: PropTypes.func.isRequired,
+  setDates: PropTypes.func.isRequired,
   routing: PropTypes.shape({
     page: PropTypes.string,
   }).isRequired,
