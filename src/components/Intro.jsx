@@ -14,7 +14,7 @@ const Intro = ({ questions, answer }) => (
         justifyContent: 'center',
       }}
     >
-      <h2>{questionList[questions.current].name}</h2>
+      <h2 style={{ margin: '0 20px' }}>{questionList[questions.current].name}</h2>
     </div>
     <Button.Group size="large" style={{ height: '25%' }}>
       <Button type="primary" onClick={() => answer(questionList[questions.current].preference)}>

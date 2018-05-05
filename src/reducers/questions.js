@@ -1,8 +1,9 @@
 import { NEXT_QUESTION } from '../actions/questions';
+import questionList from '../questions.json';
 
 const INITIAL_STATE = {
   current: 0,
-  maxQuestions: 3,
+  maxQuestions: questionList.length,
   progressPercent: 0,
 };
 

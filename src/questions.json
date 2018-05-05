@@ -10,5 +10,13 @@
   {
     "name": "I enjoy cultural activities like theaters and museums.",
     "preference": "culture"
+  },
+  {
+    "name": "I would like to participate in local events.",
+    "preference": "events"
+  },
+  {
+    "name": "I want to experience the nightlife.",
+    "preference": "nightlife"
   }
 ]
