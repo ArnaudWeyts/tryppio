@@ -1,15 +1,15 @@
-import { ADD_PREFERENCE } from '../actions/user';
+import { ROUTE_TO_PAGE } from '../actions/routing';
 
 const INITIAL_STATE = {
-  preferences: [],
+  page: 'intro',
 };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
-    case ADD_PREFERENCE:
+    case ROUTE_TO_PAGE:
       return {
         ...state,
-        preferences: [...state.preferences, action.preference],
+        page: action.page,
       };
     default:
       return state;

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "I want to have an active trip mixed with sports.",
+    "preference": "active"
+  },
+  {
+    "name": "I like soaking up local culture.",
+    "preference": "local"
+  },
+  {
+    "name": "I enjoy cultural activities like theaters and museums.",
+    "preference": "culture"
+  }
+]
