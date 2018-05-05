@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Progress } from 'antd';
 
 import questionList from '../questions.json';
 
-export default ({ questions, answer }) => (
+const Intro = ({ questions, answer }) => (
   <div style={{ height: '100%' }}>
     <div
       style={{
@@ -50,3 +51,13 @@ export default ({ questions, answer }) => (
     </div>
   </div>
 );
+
+Intro.propTypes = {
+  questions: PropTypes.shape({
+    current: PropTypes.number.isRequired,
+    maxQuestions: PropTypes.number.isRequired,
+  }).isRequired,
+  answer: PropTypes.func.isRequired,
+};
+
+export default Intro;

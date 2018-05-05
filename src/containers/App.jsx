@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Layout } from 'antd';
 import './App.css';
 import Intro from '../components/Intro';
@@ -56,5 +57,18 @@ const mapDispatchToProps = dispatch => ({
   routeToPage: page => dispatch(routeToPage(page)),
   nextQuestion: () => dispatch(nextQuestion()),
 });
+
+App.propTypes = {
+  questions: PropTypes.shape({
+    current: PropTypes.number.isRequired,
+    maxQuestions: PropTypes.number.isRequired,
+  }).isRequired,
+  addPreference: PropTypes.func.isRequired,
+  routeToPage: PropTypes.func.isRequired,
+  nextQuestion: PropTypes.func.isRequired,
+  routing: PropTypes.shape({
+    page: PropTypes.string,
+  }).isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
