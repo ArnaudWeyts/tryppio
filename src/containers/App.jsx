@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Layout, DatePicker } from 'antd';
 import './App.css';
+
 import Intro from '../components/Intro';
+import Overview from './Overview';
+
 import { addPreference, setDates } from '../actions/user';
 import { routeToPage } from '../actions/routing';
 import { nextQuestion } from '../actions/questions';
@@ -32,6 +35,7 @@ class App extends Component {
 
   dateChanged(dates, dateStrings) {
     this.props.setDates(dateStrings);
+    this.props.routeToPage('overview');
   }
 
   render() {
@@ -57,6 +61,7 @@ class App extends Component {
                 <RangePicker onChange={this.dateChanged} />
               </div>
             )}
+            {page === 'overview' && <Overview />}
           </Content>
         </Layout>
       </div>
