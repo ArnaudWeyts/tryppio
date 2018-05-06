@@ -5,24 +5,27 @@ import { Spin } from 'antd';
 
 import { routeToPage } from '../actions/routing';
 
+import Trip from '../components/Trip';
+
 class Overview extends Component {
   render() {
-    const { calculating } = this.props.trip;
+    const { trip } = this.props;
     return (
-      <div
-        style={{
-          height: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {calculating && (
-          <div>
+      <div style={{ padding: '2em', height: '100%' }}>
+        {trip.calculating && (
+          <div
+            style={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <h2 style={{ marginBottom: '3em' }}>Planning your perfect trip...</h2>
             <Spin size="large" />
           </div>
         )}
+        {!trip.calculating && <Trip trip={trip} />}
       </div>
     );
   }

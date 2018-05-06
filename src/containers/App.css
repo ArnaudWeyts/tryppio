@@ -4,5 +4,10 @@
 
 /* ant overrides */
 .questions-progress .ant-progress-inner {
-  background-color: rgba(24, 144, 255, 0.28)
+  background-color: rgba(24, 144, 255, 0.28);
+}
+
+.overview-btn-group * {
+  width: 100%;
+  margin: 0.5em 0;
 }

@@ -42,6 +42,7 @@ function determineActivity(dispatch, timeSlot, preference) {
     };
 
     dispatch(addActivity(relevantVenueInfo));
+    dispatch(toggleCalculating());
   });
 }
 
@@ -49,5 +50,8 @@ export function startCalculation() {
   return (dispatch, getState) => {
     dispatch(toggleCalculating());
     determineActivity(dispatch, 'morning-1', getState().user.preferences[1]);
+    // determine activities syncronized, check in each activity
+    // if still calculating and if last activity, toggle finished calculating
+    // eventually determine routes between activities
   };
 }
