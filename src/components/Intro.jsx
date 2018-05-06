@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Progress } from 'antd';
 
-import questionList from '../questions.json';
+import prefs from '../preferences.json';
+
+const { questions: questionList } = prefs;
 
 const Intro = ({ questions, answer }) => (
   <div style={{ height: '100%' }}>

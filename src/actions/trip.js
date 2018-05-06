@@ -1,5 +1,13 @@
-export const CALCULATE_TRIP = 'CALCULATE_TRIP';
+import FqAPIHandler from '../foursquare';
+
+const fqAPIHandler = new FqAPIHandler(
+  process.env.REACT_APP_FOURSQUARE_ID,
+  process.env.REACT_APP_FOURSQUARE_SECRET,
+);
+
+export const TOGGLE_CALCULATING = 'TOGGLE_CALCULATING';
 export const SET_DATES = 'SET_DATES';
+export const ADD_ACTIVITY = 'ADD_ACTIVITY';
 
 export function setDates(dates) {
   return {
@@ -8,8 +16,38 @@ export function setDates(dates) {
   };
 }
 
-export function calculateTrip() {
+function toggleCalculating() {
   return {
-    type: CALCULATE_TRIP,
+    type: TOGGLE_CALCULATING,
+  };
+}
+
+function addActivity(activity) {
+  return {
+    type: ADD_ACTIVITY,
+    activity,
+  };
+}
+
+function determineActivity(dispatch, timeSlot, preference) {
+  fqAPIHandler.GetVenuesForPreference(preference).then((venues) => {
+    // Get a random venu from list
+    const venue = venues[Math.floor(Math.random() * venues.length)];
+
+    const relevantVenueInfo = {
+      name: venue.name,
+      address: venue.location.address,
+      lat: venue.location.lat,
+      lng: venue.location.lng,
+    };
+
+    dispatch(addActivity(relevantVenueInfo));
+  });
+}
+
+export function startCalculation() {
+  return (dispatch, getState) => {
+    dispatch(toggleCalculating());
+    determineActivity(dispatch, 'morning-1', getState().user.preferences[1]);
   };
 }

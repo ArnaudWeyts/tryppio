@@ -10,7 +10,7 @@ import Overview from './Overview';
 import { addPreference } from '../actions/user';
 import { routeToPage } from '../actions/routing';
 import { nextQuestion } from '../actions/questions';
-import { calculateTrip, setDates } from '../actions/trip';
+import { startCalculation, setDates } from '../actions/trip';
 
 const { Content } = Layout;
 const { RangePicker } = DatePicker;
@@ -82,7 +82,7 @@ const mapDispatchToProps = dispatch => ({
   routeToPage: page => dispatch(routeToPage(page)),
   nextQuestion: () => dispatch(nextQuestion()),
   setDates: dates => dispatch(setDates(dates)),
-  calculateTrip: () => dispatch(calculateTrip()),
+  calculateTrip: () => dispatch(startCalculation()),
 });
 
 App.propTypes = {
