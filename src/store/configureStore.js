@@ -15,7 +15,11 @@ const configureStore = () => {
   );
 
   store.subscribe(() => {
-    saveState({ user: store.getState().user, trip: store.getState().trip });
+    saveState({
+      user: store.getState().user,
+      trip: store.getState().trip,
+      routing: store.getState().routing,
+    });
   });
 
   return store;
