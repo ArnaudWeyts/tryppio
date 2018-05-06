@@ -15,7 +15,7 @@ const configureStore = () => {
   );
 
   store.subscribe(() => {
-    saveState({ user: store.getState().user });
+    saveState({ user: store.getState().user, trip: store.getState().trip });
   });
 
   return store;

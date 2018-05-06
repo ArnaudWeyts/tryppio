@@ -7,9 +7,10 @@ import './App.css';
 import Intro from '../components/Intro';
 import Overview from './Overview';
 
-import { addPreference, setDates } from '../actions/user';
+import { addPreference } from '../actions/user';
 import { routeToPage } from '../actions/routing';
 import { nextQuestion } from '../actions/questions';
+import { calculateTrip, setDates } from '../actions/trip';
 
 const { Content } = Layout;
 const { RangePicker } = DatePicker;
@@ -35,6 +36,7 @@ class App extends Component {
 
   dateChanged(dates, dateStrings) {
     this.props.setDates(dateStrings);
+    this.props.calculateTrip();
     this.props.routeToPage('overview');
   }
 
@@ -80,6 +82,7 @@ const mapDispatchToProps = dispatch => ({
   routeToPage: page => dispatch(routeToPage(page)),
   nextQuestion: () => dispatch(nextQuestion()),
   setDates: dates => dispatch(setDates(dates)),
+  calculateTrip: () => dispatch(calculateTrip()),
 });
 
 App.propTypes = {
@@ -91,6 +94,7 @@ App.propTypes = {
   routeToPage: PropTypes.func.isRequired,
   nextQuestion: PropTypes.func.isRequired,
   setDates: PropTypes.func.isRequired,
+  calculateTrip: PropTypes.func.isRequired,
   routing: PropTypes.shape({
     page: PropTypes.string,
   }).isRequired,

@@ -1,7 +1,11 @@
-import { CALCULATE_TRIP } from '../actions/trip';
+import { CALCULATE_TRIP, SET_DATES } from '../actions/trip';
 
 const INITIAL_STATE = {
   calculating: false,
+  dates: {
+    arrival: null,
+    leave: null,
+  },
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -10,6 +14,11 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         calculating: true,
+      };
+    case SET_DATES:
+      return {
+        ...state,
+        dates: { arrival: action.dates[0], leave: action.dates[1] },
       };
     default:
       return state;
