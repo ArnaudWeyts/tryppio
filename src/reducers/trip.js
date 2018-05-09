@@ -1,4 +1,4 @@
-import { TOGGLE_CALCULATING, SET_DATES, ADD_ACTIVITY } from '../actions/trip';
+import { TOGGLE_CALCULATING, SET_DATES, ADD_ACTIVITY, RESET_ACTIVITIES } from '../actions/trip';
 
 const INITIAL_STATE = {
   calculating: false,
@@ -25,6 +25,11 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         activities: [...state.activities, action.activity],
+      };
+    case RESET_ACTIVITIES:
+      return {
+        ...state,
+        activities: [],
       };
     default:
       return state;

@@ -1,4 +1,4 @@
-import { ADD_PREFERENCE } from '../actions/user';
+import { ADD_PREFERENCE, RESET_PREFERENCES } from '../actions/user';
 
 const INITIAL_STATE = {
   preferences: [],
@@ -10,6 +10,11 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         preferences: [...state.preferences, action.preference],
+      };
+    case RESET_PREFERENCES:
+      return {
+        ...state,
+        preferences: [],
       };
     default:
       return state;

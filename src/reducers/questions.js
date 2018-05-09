@@ -1,4 +1,4 @@
-import { NEXT_QUESTION } from '../actions/questions';
+import { NEXT_QUESTION, RESET_QUESTIONS } from '../actions/questions';
 import prefs from '../preferences.json';
 
 const INITIAL_STATE = {
@@ -17,6 +17,8 @@ export default function (state = INITIAL_STATE, action) {
         progressPercent: 100 * ((current + 1) / maxQuestions),
       };
     }
+    case RESET_QUESTIONS:
+      return { ...INITIAL_STATE };
     default:
       return state;
   }

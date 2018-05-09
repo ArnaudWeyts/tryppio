@@ -8,6 +8,7 @@ const fqAPIHandler = new FqAPIHandler(
 export const TOGGLE_CALCULATING = 'TOGGLE_CALCULATING';
 export const SET_DATES = 'SET_DATES';
 export const ADD_ACTIVITY = 'ADD_ACTIVITY';
+export const RESET_ACTIVITIES = 'RESET_ACTIVITIES';
 
 export function setDates(dates) {
   return {
@@ -26,6 +27,12 @@ function addActivity(activity) {
   return {
     type: ADD_ACTIVITY,
     activity,
+  };
+}
+
+function resetActivities() {
+  return {
+    type: RESET_ACTIVITIES,
   };
 }
 
@@ -49,6 +56,7 @@ function determineActivity(dispatch, timeSlot, preference) {
 export function startCalculation() {
   return (dispatch, getState) => {
     dispatch(toggleCalculating());
+    dispatch(resetActivities());
     determineActivity(dispatch, 'morning-1', getState().user.preferences[1]);
     // determine activities syncronized, check in each activity
     // if still calculating and if last activity, toggle finished calculating

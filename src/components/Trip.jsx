@@ -4,7 +4,7 @@ import { Timeline, Button } from 'antd';
 const renderActivities = activities =>
   activities.map(act => <Timeline.Item key={act.name}>{act.name}</Timeline.Item>);
 
-const Trip = ({ trip: { activities } }) => (
+const Trip = ({ trip: { activities }, calculate, reset }) => (
   <div
     style={{
       display: 'flex',
@@ -15,8 +15,8 @@ const Trip = ({ trip: { activities } }) => (
     <Timeline style={{ flexGrow: '1' }}>{renderActivities(activities)}</Timeline>
     <div className="overview-btn-group">
       <Button disabled>View map</Button>
-      <Button>Calculate a new trip</Button>
-      <Button>Reset my preferences</Button>
+      <Button onClick={calculate}>Calculate a new trip</Button>
+      <Button onClick={reset}>Reset my preferences</Button>
     </div>
   </div>
 );
