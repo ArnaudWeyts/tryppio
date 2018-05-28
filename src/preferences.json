@@ -22,10 +22,25 @@
     }
   ],
   "categories": {
-    "active": [],
+    "active": {
+      "ids": ["56aa371be4b08b9a8d57355e"],
+      "timeBlocks": ["morning", "afternoon", "evening"]
+    },
     "local": [],
-    "culture": ["50aaa49e4b90af0d42d5de11", "4bf58dd8d48988d181941735", "4bf58dd8d48988d1f2931735"],
-    "events": [],
-    "nightlife": []
+    "culture": {
+      "ids": ["50aaa49e4b90af0d42d5de11", "4bf58dd8d48988d181941735", "4bf58dd8d48988d1f2931735"],
+      "timeBlocks": ["morning", "afternoon", "evening"]
+    },
+    "events": {
+      "ids": [
+        "5267e4d8e4b0ec79466e48c5",
+        "52741d85e4b0d5d1e3c6a6d9",
+        "5267e4d9e4b0ec79466e48d1",
+        "5267e4d9e4b0ec79466e48c7",
+        "52f2ab2ebcbc57f1066b8b3b"
+      ],
+      "timeBlocks": ["morning, afternoon, evening"]
+    },
+    "nightlife": { "ids": ["4d4b7105d754a06376d81259"], "timeBlocks": ["evening"] }
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Timeline, Button } from 'antd';
 
 const renderActivities = activities =>
-  activities.map(act => <Timeline.Item key={act.name}>{act.name}</Timeline.Item>);
+  activities.map(act => <Timeline.Item key={act.activity.name}>{act.activity.name}</Timeline.Item>);
 
 const Trip = ({ trip: { activities }, calculate, reset }) => (
   <div

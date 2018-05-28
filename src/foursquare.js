@@ -1,9 +1,5 @@
 import 'whatwg-fetch';
 
-import prefs from './preferences.json';
-
-const prefCats = prefs.categories;
-
 export default class FoursquareAPI {
   constructor(clientId, clientSecret) {
     this.baseUrl = 'https://api.foursquare.com/v2';
@@ -11,12 +7,10 @@ export default class FoursquareAPI {
     this.clientSecret = clientSecret;
   }
 
-  GetVenuesForPreference(preference) {
-    const categories = prefCats[preference].join(',');
-
+  GetVenuesForCategoryIds(ids) {
     const url = `${this.baseUrl}/venues/search?client_id=${this.clientId}&client_secret=${
       this.clientSecret
-    }&near=Ghent,%20Belgium&v=20180506&categoryId=${categories}&limit=5`;
+    }&near=Ghent,%20Belgium&v=20180506&categoryId=${ids}&limit=5`;
     return fetch(url)
       .then(resp => resp.json())
       .then(json => json.response.venues);
