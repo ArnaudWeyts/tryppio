@@ -24,7 +24,7 @@ class Overview extends Component {
   }
 
   render() {
-    const { trip, calculateTrip } = this.props;
+    const { trip, routeToPage } = this.props;
     return (
       <div style={{ padding: '2em', height: '100%' }}>
         {trip.calculating && (
@@ -42,7 +42,12 @@ class Overview extends Component {
           </div>
         )}
         {!trip.calculating && (
-          <Trip trip={trip} calculate={calculateTrip} reset={this.resetPreferences} />
+          <Trip
+            trip={trip}
+            calculate={() => routeToPage('date')}
+            reset={this.resetPreferences}
+            routeToMap={() => routeToPage('map')}
+          />
         )}
       </div>
     );
@@ -70,7 +75,6 @@ Overview.propTypes = {
     activities: PropTypes.array,
   }).isRequired,
   routeToPage: PropTypes.func.isRequired,
-  calculateTrip: PropTypes.func.isRequired,
   resetPreferences: PropTypes.func.isRequired,
   resetQuestions: PropTypes.func.isRequired,
 };
