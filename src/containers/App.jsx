@@ -38,6 +38,9 @@ class App extends Component {
   }
 
   dateChanged(dates, dateStrings) {
+    if (dateStrings[0] === '' || dateStrings[1] === '') {
+      return;
+    }
     this.props.setDates(dateStrings);
     this.props.calculateTrip();
     this.props.routeToPage('overview');

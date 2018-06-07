@@ -6,7 +6,7 @@ import { Spin } from 'antd';
 import { resetQuestions } from '../actions/questions';
 import { resetPreferences } from '../actions/user';
 import { startCalculation } from '../actions/trip';
-import { routeToPage } from '../actions/routing';
+import { routeToPage as routeToPageDisp } from '../actions/routing';
 
 import Trip from '../components/Trip';
 
@@ -59,7 +59,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  routeToPage: page => dispatch(routeToPage(page)),
+  routeToPage: page => dispatch(routeToPageDisp(page)),
   calculateTrip: () => dispatch(startCalculation()),
   resetPreferences: () => dispatch(resetPreferences()),
   resetQuestions: () => dispatch(resetQuestions()),
