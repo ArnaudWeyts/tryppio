@@ -114,10 +114,13 @@ export function startCalculation() {
       const { activity: activity2 } = getState().trip.activities[1];
       const { activity: activity3 } = getState().trip.activities[2];
 
-      Promise.all([
-        calculateDistance(activity1, activity2).then(resp => dispatch(addTravel(resp))),
-        calculateDistance(activity2, activity3).then(resp => dispatch(addTravel(resp))),
-      ]).then(dispatch(toggleCalculating()));
+      // Very ugly way to make sure they don't get mixed up FIX ASAP
+      calculateDistance(activity1, activity2).then((resp) => {
+        dispatch(addTravel(resp));
+        calculateDistance(activity2, activity3).then(response => dispatch(addTravel(response)));
+      });
+
+      dispatch(toggleCalculating());
     }
 
     // Wait for all the promises to finish, then toggleCalculating

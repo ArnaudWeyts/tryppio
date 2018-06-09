@@ -23,7 +23,7 @@ export default class GoogleAPI {
         {
           origins: [originGM],
           destinations: [destinationGM],
-          travelMode: 'DRIVING',
+          travelMode: 'WALKING',
         },
         resp => resolve(resp.rows[0].elements[0].distance.text),
       );
