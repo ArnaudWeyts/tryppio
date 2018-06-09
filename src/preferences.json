@@ -1,0 +1,46 @@
+{
+  "questions": [
+    {
+      "name": "I want to have an active trip mixed with sports.",
+      "preference": "active"
+    },
+    {
+      "name": "I like soaking up local culture.",
+      "preference": "local"
+    },
+    {
+      "name": "I enjoy cultural activities like theaters and museums.",
+      "preference": "culture"
+    },
+    {
+      "name": "I would like to participate in local events.",
+      "preference": "events"
+    },
+    {
+      "name": "I want to experience the nightlife.",
+      "preference": "nightlife"
+    }
+  ],
+  "categories": {
+    "active": {
+      "ids": ["56aa371be4b08b9a8d57355e"],
+      "timeBlocks": ["morning", "afternoon", "evening"]
+    },
+    "local": [],
+    "culture": {
+      "ids": ["50aaa49e4b90af0d42d5de11", "4bf58dd8d48988d181941735", "4bf58dd8d48988d1f2931735"],
+      "timeBlocks": ["morning", "afternoon", "evening"]
+    },
+    "events": {
+      "ids": [
+        "5267e4d8e4b0ec79466e48c5",
+        "52741d85e4b0d5d1e3c6a6d9",
+        "5267e4d9e4b0ec79466e48d1",
+        "5267e4d9e4b0ec79466e48c7",
+        "52f2ab2ebcbc57f1066b8b3b"
+      ],
+      "timeBlocks": ["morning, afternoon, evening"]
+    },
+    "nightlife": { "ids": ["4d4b7105d754a06376d81259"], "timeBlocks": ["evening"] }
+  }
+}

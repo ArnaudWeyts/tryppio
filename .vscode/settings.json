@@ -1,0 +1,11 @@
+{
+  "javascript.format.enable": false,
+  "prettier.eslintIntegration": true,
+  "spellright.language": "en",
+  "spellright.documentTypes": [
+    "markdown",
+    "latex",
+    "plaintext",
+    "json"
+  ]
+}
