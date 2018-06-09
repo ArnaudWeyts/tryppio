@@ -1,0 +1,20 @@
+{
+  "name": "Tryppio",
+  "short_name": "Tryppio",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png?v=RyMKr69m3J",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png?v=RyMKr69m3J",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#40a9ff",
+  "background_color": "#40a9ff",
+  "display": "standalone",
+  "orientation": "portrait"
+}
