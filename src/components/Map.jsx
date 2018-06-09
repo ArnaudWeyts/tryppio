@@ -4,8 +4,7 @@ import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
 import { Button, Icon } from 'antd';
 
 const Map = ReactMapboxGl({
-  accessToken:
-    'pk.eyJ1IjoiYXJuYXVkd2V5dHMiLCJhIjoiY2o0cGt3d3oxMXl0cDMzcXNlbThnM3RtaCJ9.BMUyxqHH-FC69pW4U4YO9A',
+  accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
 });
 
 class ActivityMap extends Component {
