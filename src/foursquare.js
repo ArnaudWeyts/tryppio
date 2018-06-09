@@ -10,7 +10,7 @@ export default class FoursquareAPI {
   GetVenuesForCategoryIds(ids) {
     const url = `${this.baseUrl}/venues/search?client_id=${this.clientId}&client_secret=${
       this.clientSecret
-    }&near=Ghent,%20Belgium&v=20180506&categoryId=${ids}&limit=5`;
+    }&v=20180506&ll=51.05,3.7167&radius=2500&intent=browse&categoryId=${ids}&limit=5`;
     return fetch(url)
       .then(resp => resp.json())
       .then(json => json.response.venues);
