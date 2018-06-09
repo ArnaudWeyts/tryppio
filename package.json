@@ -1,5 +1,6 @@
 {
   "name": "tryppio",
+  "homepage": "https://arnaudweyts.github.io/tryppio/",
   "version": "0.1.0",
   "dependencies": {
     "antd": "^3.4.0",
