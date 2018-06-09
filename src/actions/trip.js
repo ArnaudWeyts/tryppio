@@ -15,6 +15,7 @@ export const SET_DATES = 'SET_DATES';
 export const ADD_ACTIVITY = 'ADD_ACTIVITY';
 export const SORT_ACTIVITIES = 'SORT_ACTIVITIES';
 export const RESET_ACTIVITIES = 'RESET_ACTIVITIES';
+export const ADD_TRAVEL = 'ADD_TRAVEL';
 
 export function setDates(dates) {
   return {
@@ -47,6 +48,13 @@ function sortActivities(sortedActivities) {
   return {
     type: SORT_ACTIVITIES,
     sortedActivities,
+  };
+}
+
+function addTravel(distance) {
+  return {
+    type: ADD_TRAVEL,
+    distance,
   };
 }
 
@@ -106,10 +114,10 @@ export function startCalculation() {
       const { activity: activity2 } = getState().trip.activities[1];
       const { activity: activity3 } = getState().trip.activities[2];
 
-      calculateDistance(activity1, activity2).then(resp => console.log(resp));
-      calculateDistance(activity2, activity3).then(resp => console.log(resp));
-
-      dispatch(toggleCalculating());
+      Promise.all([
+        calculateDistance(activity1, activity2).then(resp => dispatch(addTravel(resp))),
+        calculateDistance(activity2, activity3).then(resp => dispatch(addTravel(resp))),
+      ]).then(dispatch(toggleCalculating()));
     }
 
     // Wait for all the promises to finish, then toggleCalculating

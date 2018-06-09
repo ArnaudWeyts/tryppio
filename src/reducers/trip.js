@@ -4,6 +4,7 @@ import {
   ADD_ACTIVITY,
   SORT_ACTIVITIES,
   RESET_ACTIVITIES,
+  ADD_TRAVEL,
 } from '../actions/trip';
 
 const INITIAL_STATE = {
@@ -13,6 +14,7 @@ const INITIAL_STATE = {
     leave: null,
   },
   activities: [],
+  travel: [],
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -39,11 +41,17 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         activities: [],
+        travel: [],
       };
     case SORT_ACTIVITIES:
       return {
         ...state,
         activities: action.sortedActivities,
+      };
+    case ADD_TRAVEL:
+      return {
+        ...state,
+        travel: [...state.travel, action.distance],
       };
     default:
       return state;

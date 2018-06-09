@@ -1,11 +1,21 @@
 import React from 'react';
 import { Timeline, Button } from 'antd';
 
-const renderActivities = activities =>
-  activities.map(act => <Timeline.Item key={act.activity.name}>{act.activity.name}</Timeline.Item>);
+const renderActivities = (activities, travel) =>
+  activities.map((act) => {
+    if (activities.indexOf(act) !== activities.length - 1) {
+      return (
+        <React.Fragment key={activities.indexOf(act)}>
+          <Timeline.Item>{act.activity.name}</Timeline.Item>
+          <Timeline.Item>{travel[activities.indexOf(act)]}</Timeline.Item>
+        </React.Fragment>
+      );
+    }
+    return <Timeline.Item key={act.activity.name}>{act.activity.name}</Timeline.Item>;
+  });
 
 const Trip = ({
-  trip: { activities }, calculate, reset, routeToMap,
+  trip: { activities, travel }, calculate, reset, routeToMap,
 }) => (
   <div
     style={{
@@ -14,7 +24,7 @@ const Trip = ({
       height: '100%',
     }}
   >
-    <Timeline style={{ flexGrow: '1' }}>{renderActivities(activities)}</Timeline>
+    <Timeline style={{ flexGrow: '1' }}>{renderActivities(activities, travel)}</Timeline>
     <div className="overview-btn-group">
       <Button style={{ height: '4em' }} type="primary" onClick={routeToMap}>
         View map
