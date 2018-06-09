@@ -1,4 +1,5 @@
 import FqAPIHandler from '../foursquare';
+import GDAPI from '../google';
 
 import { categories as allCategories } from '../preferences.json';
 
@@ -6,6 +7,8 @@ const fqAPIHandler = new FqAPIHandler(
   process.env.REACT_APP_FOURSQUARE_ID,
   process.env.REACT_APP_FOURSQUARE_SECRET,
 );
+
+const gdAPIHandler = new GDAPI();
 
 export const TOGGLE_CALCULATING = 'TOGGLE_CALCULATING';
 export const SET_DATES = 'SET_DATES';
@@ -77,6 +80,10 @@ function determineActivity(timeBlock) {
   };
 }
 
+function calculateDistance(ll1, ll2) {
+  return gdAPIHandler.CalculateDistance(ll1, ll2);
+}
+
 export function startCalculation() {
   return (dispatch, getState) => {
     dispatch(toggleCalculating());
@@ -94,6 +101,14 @@ export function startCalculation() {
         return 0;
       });
       dispatch(sortActivities(sortedActivities));
+
+      const { activity: activity1 } = getState().trip.activities[0];
+      const { activity: activity2 } = getState().trip.activities[1];
+      const { activity: activity3 } = getState().trip.activities[2];
+
+      calculateDistance(activity1, activity2).then(resp => console.log(resp));
+      calculateDistance(activity2, activity3).then(resp => console.log(resp));
+
       dispatch(toggleCalculating());
     }
 
