@@ -5,12 +5,12 @@
       "preference": "active"
     },
     {
-      "name": "I like soaking up local culture.",
-      "preference": "local"
-    },
-    {
       "name": "I enjoy cultural activities like theaters and museums.",
       "preference": "culture"
+    },
+    {
+      "name": "I like spending time in nature.",
+      "preference": "nature"
     },
     {
       "name": "I would like to participate in local events.",
@@ -23,12 +23,21 @@
   ],
   "categories": {
     "active": {
-      "ids": ["56aa371be4b08b9a8d57355e"],
+      "ids": ["56aa371be4b08b9a8d57355e", "4bf58dd8d48988d159941735"],
       "timeBlocks": ["morning", "afternoon", "evening"]
     },
-    "local": [],
     "culture": {
-      "ids": ["50aaa49e4b90af0d42d5de11", "4bf58dd8d48988d181941735", "4bf58dd8d48988d1f2931735"],
+      "ids": [
+        "50aaa49e4b90af0d42d5de11",
+        "4bf58dd8d48988d181941735",
+        "4bf58dd8d48988d1e2931735",
+        "4bf58dd8d48988d1f2931735",
+        "56aa371be4b08b9a8d5734db",
+        "4deefb944765f83613cdba6e",
+        "507c8c4091d498d9fc8c67a9",
+        "4bf58dd8d48988d12d941735",
+        "4bf58dd8d48988d131941735"
+      ],
       "timeBlocks": ["morning", "afternoon", "evening"]
     },
     "events": {
@@ -41,6 +50,25 @@
       ],
       "timeBlocks": ["morning, afternoon, evening"]
     },
-    "nightlife": { "ids": ["4d4b7105d754a06376d81259"], "timeBlocks": ["evening"] }
+    "nature": {
+      "ids": [
+        "52e81612bcbc57f1066b7a22",
+        "52e81612bcbc57f1066b7a23",
+        "4bf58dd8d48988d15a941735",
+        "4bf58dd8d48988d161941735",
+        "4bf58dd8d48988d163941735",
+        "52e81612bcbc57f1066b7a13",
+        "4bf58dd8d48988d165941735"
+      ],
+      "timeBlocks": ["morning, afternoon, evening"]
+    },
+    "nightlife": {
+      "ids": ["4d4b7105d754a06376d81259", "4bf58dd8d48988d1e5931735", "4bf58dd8d48988d11b941735"],
+      "timeBlocks": ["evening"]
+    },
+    "food": {
+      "ids": ["4bf58dd8d48988d1c4941735"],
+      "timeBlocks": ["lunch", "dinner"]
+    }
   }
 }
