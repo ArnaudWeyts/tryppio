@@ -6,11 +6,14 @@ import moment from 'moment';
 
 import './App.css';
 
+import preferences from '../preferences.json';
+
 import Intro from '../components/Intro';
 import ActivityMap from '../components/Map';
 import Overview from './Overview';
 
-import { addPreference } from '../actions/user';
+import { addPreference, resetPreferences } from '../actions/user';
+import { resetQuestions } from '../actions/questions';
 import { routeToPage } from '../actions/routing';
 import { nextQuestion } from '../actions/questions';
 import { startCalculation, setDates } from '../actions/trip';
@@ -32,6 +35,31 @@ class App extends Component {
       this.props.addPreference(answer);
     }
     if (current + 1 === maxQuestions) {
+      // ugly way to prevent calculation when not enough preferences are linked
+      if (this.props.user.preferences.length < 1) {
+        console.log('not enough preferences linked');
+        this.props.resetPreferences();
+        this.props.resetQuestions();
+        this.props.routeToPage('intro');
+        return;
+      }
+      let timeBlocks = [];
+      this.props.user.preferences.forEach((pref) => {
+        timeBlocks = [...timeBlocks, ...preferences.categories[pref].timeBlocks];
+      });
+      if (
+        !(
+          timeBlocks.includes('morning') &&
+          timeBlocks.includes('afternoon') &&
+          timeBlocks.includes('evening')
+        )
+      ) {
+        console.log('not enough preferences for every time block');
+        this.props.resetPreferences();
+        this.props.resetQuestions();
+        this.props.routeToPage('intro');
+        return;
+      }
       this.props.routeToPage('date');
     }
     this.props.nextQuestion();
@@ -116,6 +144,8 @@ const mapDispatchToProps = dispatch => ({
   nextQuestion: () => dispatch(nextQuestion()),
   setDates: dates => dispatch(setDates(dates)),
   calculateTrip: () => dispatch(startCalculation()),
+  resetPreferences: () => dispatch(resetPreferences()),
+  resetQuestions: () => dispatch(resetQuestions()),
 });
 
 App.propTypes = {
