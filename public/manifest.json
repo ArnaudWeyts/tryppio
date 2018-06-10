@@ -1,7 +1,7 @@
 {
   "name": "Tryppio",
   "short_name": "Tryppio",
-  "start_url": "./",
+  "start_url": "./index.html",
   "icons": [
     {
       "src": "/android-chrome-192x192.png?v=RyMKr69m3J",
