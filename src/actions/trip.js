@@ -73,7 +73,7 @@ function determineActivity(timeBlock) {
     // Determine fq category ids for preference
     const categoryIds = allCategories[preference].ids.join(',');
 
-    return fqAPIHandler.GetVenuesForCategoryIds(categoryIds).then((venues) => {
+    return fqAPIHandler.getVenuesForCategoryIds(categoryIds).then((venues) => {
       // Get a random venue from list
       const venue = venues[Math.floor(Math.random() * venues.length)];
 
@@ -90,7 +90,7 @@ function determineActivity(timeBlock) {
 }
 
 function calculateTime(ll1, ll2, travelMode) {
-  return gdAPIHandler.CalculateTime(ll1, ll2, travelMode);
+  return gdAPIHandler.calculateTime(ll1, ll2, travelMode);
 }
 
 export function startCalculation() {
