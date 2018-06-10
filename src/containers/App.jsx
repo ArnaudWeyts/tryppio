@@ -13,9 +13,8 @@ import ActivityMap from '../components/Map';
 import Overview from './Overview';
 
 import { addPreference, resetPreferences } from '../actions/user';
-import { resetQuestions } from '../actions/questions';
+import { nextQuestion, resetQuestions } from '../actions/questions';
 import { routeToPage } from '../actions/routing';
-import { nextQuestion } from '../actions/questions';
 import { startCalculation, setDates } from '../actions/trip';
 
 const { Content } = Layout;
@@ -149,6 +148,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 App.propTypes = {
+  user: PropTypes.shape({
+    preferences: PropTypes.array.isRequired,
+  }).isRequired,
   questions: PropTypes.shape({
     current: PropTypes.number.isRequired,
     maxQuestions: PropTypes.number.isRequired,
@@ -158,6 +160,8 @@ App.propTypes = {
   nextQuestion: PropTypes.func.isRequired,
   setDates: PropTypes.func.isRequired,
   calculateTrip: PropTypes.func.isRequired,
+  resetPreferences: PropTypes.func.isRequired,
+  resetQuestions: PropTypes.func.isRequired,
   routing: PropTypes.shape({
     page: PropTypes.string,
   }).isRequired,
