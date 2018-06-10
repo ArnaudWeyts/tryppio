@@ -6,18 +6,16 @@ import transit from './img/transit.svg';
 
 const renderActivities = (activities, travel) =>
   activities.map((act) => {
-    if (activities.indexOf(act) !== activities.length - 1) {
-      const index = activities.indexOf(act);
-      // ugly fix
-      const travelIndex = index === 0 ? 0 : 2;
+    const index = activities.indexOf(act);
+    if (index !== activities.length - 1) {
       return (
         <React.Fragment key={index}>
           <Timeline.Item>{act.activity.name}</Timeline.Item>
           <Timeline.Item>
             <img style={{ margin: '0 1em' }} src={walking} alt="walking icon" />
-            {travel[travelIndex] && travel[travelIndex].time}
+            {travel[index][0]}
             <img style={{ margin: '0 1em' }} src={transit} alt="transit icon" />
-            {travel[travelIndex + 1] && travel[travelIndex + 1].time}
+            {travel[index][1]}
           </Timeline.Item>
         </React.Fragment>
       );

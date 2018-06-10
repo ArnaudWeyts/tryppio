@@ -20,22 +20,31 @@ export default class GoogleAPI {
    * Calculates the time it takes between 2 points
    * @param {Object{Lat: Number, Lng: Number}} origin
    * @param {Object{Lat: Number, Lng: Number}} destination
-   * @param {String} mode
+   * @param {Arrayof String} modes
    * @returns {Promise} Response from google
    */
-  calculateTime(origin, destination, mode) {
+  calculateTime(origin, destination, modes = ['DRIVING']) {
     const originGM = new this.googleMaps.LatLng(origin.lat, origin.lng);
     const destinationGM = new this.googleMaps.LatLng(destination.lat, destination.lng);
 
-    return new Promise((resolve) => {
-      this.service.getDistanceMatrix(
-        {
-          origins: [originGM],
-          destinations: [destinationGM],
-          travelMode: mode,
-        },
-        resp => resolve(resp.rows[0].elements[0].duration.text),
-      );
+    const requests = [];
+
+    // Allows for multiple modes to be defined
+    modes.forEach((mode) => {
+      const request = new Promise((resolve) => {
+        this.service.getDistanceMatrix(
+          {
+            origins: [originGM],
+            destinations: [destinationGM],
+            travelMode: mode,
+          },
+          resp => resolve(resp.rows[0].elements[0].duration.text),
+        );
+      });
+
+      requests.push(request);
     });
+
+    return Promise.all(requests);
   }
 }

@@ -17,6 +17,12 @@ const INITIAL_STATE = {
   travel: [],
 };
 
+function insertItemAtIndex(array, index, item) {
+  const newArray = array.slice();
+  newArray.splice(index, 0, item);
+  return newArray;
+}
+
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case TOGGLE_CALCULATING:
@@ -51,7 +57,7 @@ export default function (state = INITIAL_STATE, action) {
     case ADD_TRAVEL:
       return {
         ...state,
-        travel: [...state.travel, { mode: action.mode, time: action.time }],
+        travel: insertItemAtIndex(state.travel, action.index, action.times),
       };
     default:
       return state;

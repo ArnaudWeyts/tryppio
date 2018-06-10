@@ -51,14 +51,19 @@ function sortActivities(sortedActivities) {
   };
 }
 
-function addTravel(mode, time) {
+function addTravelTimes(index, times) {
   return {
     type: ADD_TRAVEL,
-    mode,
-    time,
+    index,
+    times,
   };
 }
 
+/**
+ * Determines an activity for a timebock
+ * @param {String} timeBlock timeblock
+ * @returns {Promise}
+ */
 function determineActivity(timeBlock) {
   return (dispatch, getState) => {
     const { preferences } = getState().user;
@@ -109,27 +114,25 @@ export function startCalculation() {
 
         return 0;
       });
+
+      // Sort activities
       dispatch(sortActivities(sortedActivities));
 
       const { activity: activity1 } = getState().trip.activities[0];
       const { activity: activity2 } = getState().trip.activities[1];
       const { activity: activity3 } = getState().trip.activities[2];
 
-      // Very ugly way to make sure they don't get mixed up FIX ASAP
-      calculateTime(activity1, activity2, 'WALKING').then((resp) => {
-        dispatch(addTravel('WALKING', resp));
-        calculateTime(activity1, activity2, 'TRANSIT').then((resp2) => {
-          dispatch(addTravel('TRANSIT', resp2));
-          calculateTime(activity2, activity3, 'WALKING').then((response) => {
-            dispatch(addTravel('WALKING', response));
-            calculateTime(activity2, activity3, 'TRANSIT').then((response2) => {
-              dispatch(addTravel('TRANSIT', response2));
-            });
-          });
-        });
-      });
+      const travelTime1 = () =>
+        calculateTime(activity1, activity2, ['WALKING', 'TRANSIT']).then(resp =>
+          dispatch(addTravelTimes(0, resp)));
+      const travelTime2 = () =>
+        calculateTime(activity2, activity3, ['WALKING', 'TRANSIT']).then(resp =>
+          dispatch(addTravelTimes(1, resp)));
 
-      dispatch(toggleCalculating());
+      // Wait for traveltimes to be calculated before toggling
+      Promise.all([travelTime1(), travelTime2()]).then(() => {
+        dispatch(toggleCalculating());
+      });
     }
 
     // Wait for all the promises to finish, then toggleCalculating
