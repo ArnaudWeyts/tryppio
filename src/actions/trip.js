@@ -51,10 +51,11 @@ function sortActivities(sortedActivities) {
   };
 }
 
-function addTravel(distance) {
+function addTravel(mode, time) {
   return {
     type: ADD_TRAVEL,
-    distance,
+    mode,
+    time,
   };
 }
 
@@ -88,8 +89,8 @@ function determineActivity(timeBlock) {
   };
 }
 
-function calculateDistance(ll1, ll2) {
-  return gdAPIHandler.CalculateDistance(ll1, ll2);
+function calculateTime(ll1, ll2, travelMode) {
+  return gdAPIHandler.CalculateTime(ll1, ll2, travelMode);
 }
 
 export function startCalculation() {
@@ -115,9 +116,17 @@ export function startCalculation() {
       const { activity: activity3 } = getState().trip.activities[2];
 
       // Very ugly way to make sure they don't get mixed up FIX ASAP
-      calculateDistance(activity1, activity2).then((resp) => {
-        dispatch(addTravel(resp));
-        calculateDistance(activity2, activity3).then(response => dispatch(addTravel(response)));
+      calculateTime(activity1, activity2, 'WALKING').then((resp) => {
+        dispatch(addTravel('WALKING', resp));
+        calculateTime(activity1, activity2, 'TRANSIT').then((resp2) => {
+          dispatch(addTravel('TRANSIT', resp2));
+          calculateTime(activity2, activity3, 'WALKING').then((response) => {
+            dispatch(addTravel('WALKING', response));
+            calculateTime(activity2, activity3, 'TRANSIT').then((response2) => {
+              dispatch(addTravel('TRANSIT', response2));
+            });
+          });
+        });
       });
 
       dispatch(toggleCalculating());

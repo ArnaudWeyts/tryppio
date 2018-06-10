@@ -1,13 +1,24 @@
 import React from 'react';
 import { Timeline, Button } from 'antd';
 
+import walking from './img/walking.svg';
+import transit from './img/transit.svg';
+
 const renderActivities = (activities, travel) =>
   activities.map((act) => {
     if (activities.indexOf(act) !== activities.length - 1) {
+      const index = activities.indexOf(act);
+      // ugly fix
+      const travelIndex = index === 0 ? 0 : 2;
       return (
-        <React.Fragment key={activities.indexOf(act)}>
+        <React.Fragment key={index}>
           <Timeline.Item>{act.activity.name}</Timeline.Item>
-          <Timeline.Item>{travel[activities.indexOf(act)]}</Timeline.Item>
+          <Timeline.Item>
+            <img style={{ margin: '0 1em' }} src={walking} alt="walking icon" />
+            {travel[travelIndex] && travel[travelIndex].time}
+            <img style={{ margin: '0 1em' }} src={transit} alt="transit icon" />
+            {travel[travelIndex + 1] && travel[travelIndex + 1].time}
+          </Timeline.Item>
         </React.Fragment>
       );
     }

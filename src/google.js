@@ -12,7 +12,7 @@ export default class GoogleAPI {
     });
   }
 
-  CalculateDistance(origin, destination) {
+  CalculateTime(origin, destination, mode) {
     const originGM = new this.googleMaps.LatLng(origin.lat, origin.lng);
     const destinationGM = new this.googleMaps.LatLng(destination.lat, destination.lng);
 
@@ -23,9 +23,9 @@ export default class GoogleAPI {
         {
           origins: [originGM],
           destinations: [destinationGM],
-          travelMode: 'WALKING',
+          travelMode: mode,
         },
-        resp => resolve(resp.rows[0].elements[0].distance.text),
+        resp => resolve(resp.rows[0].elements[0].duration.text),
       );
     });
   }

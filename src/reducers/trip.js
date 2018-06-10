@@ -51,7 +51,7 @@ export default function (state = INITIAL_STATE, action) {
     case ADD_TRAVEL:
       return {
         ...state,
-        travel: [...state.travel, action.distance],
+        travel: [...state.travel, { mode: action.mode, time: action.time }],
       };
     default:
       return state;
