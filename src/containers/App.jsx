@@ -34,34 +34,37 @@ class App extends Component {
       this.props.addPreference(answer);
     }
     if (current + 1 === maxQuestions) {
-      // ugly way to prevent calculation when not enough preferences are linked
-      if (this.props.user.preferences.length < 1) {
-        console.log('not enough preferences linked');
-        this.props.resetPreferences();
-        this.props.resetQuestions();
-        this.props.routeToPage('intro');
-        return;
-      }
-      let timeBlocks = [];
-      this.props.user.preferences.forEach((pref) => {
-        timeBlocks = [...timeBlocks, ...preferences.categories[pref].timeBlocks];
-      });
-      if (
-        !(
-          timeBlocks.includes('morning') &&
-          timeBlocks.includes('afternoon') &&
-          timeBlocks.includes('evening')
-        )
-      ) {
-        console.log('not enough preferences for every time block');
-        this.props.resetPreferences();
-        this.props.resetQuestions();
-        this.props.routeToPage('intro');
-        return;
-      }
-      this.props.routeToPage('date');
+      setTimeout(() => {
+        // ugly way to prevent calculation when not enough preferences are linked
+        if (this.props.user.preferences.length < 1) {
+          console.log('not enough preferences linked');
+          this.props.resetPreferences();
+          this.props.resetQuestions();
+          this.props.routeToPage('intro');
+          return;
+        }
+        let timeBlocks = [];
+        this.props.user.preferences.forEach((pref) => {
+          timeBlocks = [...timeBlocks, ...preferences.categories[pref].timeBlocks];
+        });
+        if (
+          !(
+            timeBlocks.includes('morning') &&
+            timeBlocks.includes('afternoon') &&
+            timeBlocks.includes('evening')
+          )
+        ) {
+          console.log('not enough preferences for every time block');
+          this.props.resetPreferences();
+          this.props.resetQuestions();
+          this.props.routeToPage('intro');
+          return;
+        }
+        this.props.routeToPage('date');
+      }, 50);
+    } else {
+      this.props.nextQuestion();
     }
-    this.props.nextQuestion();
   }
 
   dateChanged(dates, dateStrings) {
