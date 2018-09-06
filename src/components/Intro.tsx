@@ -1,25 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Button, Progress } from 'antd';
+import * as React from 'react';
 
-import prefs from '../preferences.json';
+import preferencesJson from '../preferences.json';
 
-const { questions: questionList } = prefs;
+const { questions: questionList } = preferencesJson;
 
-const Intro = ({ questions, answer }) => (
+const Intro = ({ questions, answer }: IIntroProps) => (
   <div style={{ height: '100%' }}>
     <div
       style={{
-        height: '70%',
-        display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        display: 'flex',
+        height: '70%',
+        justifyContent: 'center'
       }}
     >
-      <h2 style={{ margin: '0 20px' }}>{questionList[questions.current].name}</h2>
+      <h2 style={{ margin: '0 20px' }}>
+        {questionList[questions.current].name}
+      </h2>
     </div>
     <Button.Group size="large" style={{ height: '25%' }}>
-      <Button type="primary" onClick={() => answer(questionList[questions.current].preference)}>
+      <Button
+        type="primary"
+        onClick={() => answer(questionList[questions.current].preference)}
+      >
         Yes{' '}
         <span role="img" aria-label="hands">
           🙌
@@ -38,10 +42,10 @@ const Intro = ({ questions, answer }) => (
     </Button.Group>
     <div
       style={{
-        height: '5%',
-        display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        display: 'flex',
+        height: '5%',
+        justifyContent: 'center'
       }}
     >
       <Progress
@@ -53,13 +57,5 @@ const Intro = ({ questions, answer }) => (
     </div>
   </div>
 );
-
-Intro.propTypes = {
-  questions: PropTypes.shape({
-    current: PropTypes.number.isRequired,
-    maxQuestions: PropTypes.number.isRequired,
-  }).isRequired,
-  answer: PropTypes.func.isRequired,
-};
 
 export default Intro;

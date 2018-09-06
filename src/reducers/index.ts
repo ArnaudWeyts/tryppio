@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
-import user from './user';
-import routing from './routing';
 import questions from './questions';
+import routing from './routing';
 import trip from './trip';
+import user from './user';
 
 const rootReducer = combineReducers({
-  user,
-  routing,
   questions,
+  routing,
   trip,
+  user
 });
 
 export default rootReducer;

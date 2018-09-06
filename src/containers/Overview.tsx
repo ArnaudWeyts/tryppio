@@ -1,43 +1,46 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Spin } from 'antd';
+import * as React from 'react';
+import { connect } from 'react-redux';
 
 import { resetQuestions } from '../actions/questions';
-import { resetPreferences } from '../actions/user';
-import { startCalculation } from '../actions/trip';
 import { routeToPage as routeToPageDisp } from '../actions/routing';
+import { startCalculation } from '../actions/trip';
+import { resetPreferences } from '../actions/user';
 
+import { AnyAction, Dispatch } from 'redux';
 import Trip from '../components/Trip';
+import { IOverviewProps } from '../types/overview';
 
-class Overview extends Component {
-  constructor(props) {
+class Overview extends React.Component<IOverviewProps> {
+  constructor(props: IOverviewProps) {
     super(props);
 
     this.resetPreferences = this.resetPreferences.bind(this);
   }
 
-  resetPreferences() {
+  public resetPreferences() {
     this.props.resetPreferences();
     this.props.resetQuestions();
     this.props.routeToPage('intro');
   }
 
-  render() {
+  public render() {
     const { trip, routeToPage } = this.props;
     return (
       <div style={{ padding: '2em', height: '100%' }}>
         {trip.calculating && (
           <div
             style={{
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
               alignItems: 'center',
+              display: 'flex',
               flexDirection: 'column',
+              height: '100%',
+              justifyContent: 'center'
             }}
           >
-            <h2 style={{ marginBottom: '3em' }}>Planning your perfect trip...</h2>
+            <h2 style={{ marginBottom: '3em' }}>
+              Planning your perfect trip...
+            </h2>
             <Spin size="large" />
           </div>
         )}
@@ -54,29 +57,18 @@ class Overview extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  trip: state.trip,
+const mapStateToProps = (state: IState) => ({
+  trip: state.trip
 });
 
-const mapDispatchToProps = dispatch => ({
-  routeToPage: page => dispatch(routeToPageDisp(page)),
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction> | any) => ({
   calculateTrip: () => dispatch(startCalculation()),
   resetPreferences: () => dispatch(resetPreferences()),
   resetQuestions: () => dispatch(resetQuestions()),
+  routeToPage: (page: string) => dispatch(routeToPageDisp(page))
 });
 
-Overview.propTypes = {
-  trip: PropTypes.shape({
-    calculating: PropTypes.bool,
-    dates: PropTypes.shape({
-      arrival: PropTypes.string,
-      leave: PropTypes.string,
-    }),
-    activities: PropTypes.array,
-  }).isRequired,
-  routeToPage: PropTypes.func.isRequired,
-  resetPreferences: PropTypes.func.isRequired,
-  resetQuestions: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Overview);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Overview);

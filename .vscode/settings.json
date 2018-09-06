@@ -1,11 +1,4 @@
 {
-  "javascript.format.enable": false,
-  "prettier.eslintIntegration": true,
-  "spellright.language": "en",
-  "spellright.documentTypes": [
-    "markdown",
-    "latex",
-    "plaintext",
-    "json"
-  ]
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "tslint.autoFixOnSave": true
 }

@@ -1,30 +1,30 @@
-import { createStore, applyMiddleware } from 'redux';
+import { throttle } from 'lodash';
+import { applyMiddleware, createStore } from 'redux';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-import thunk from 'redux-thunk';
-import throttle from 'lodash/throttle';
+import reduxThunk from 'redux-thunk';
 
-import rootReducer from '../reducers';
+import reducers from '../reducers';
 import { loadState, saveState } from '../utils/localStorage';
 
 const persistedState = loadState();
 
 const configureStore = () => {
   const store = createStore(
-    rootReducer,
+    reducers,
     persistedState,
-    composeWithDevTools(applyMiddleware(thunk)),
+    composeWithDevTools(applyMiddleware(reduxThunk))
   );
 
   store.subscribe(
     throttle(() => {
       saveState({
-        user: store.getState().user,
-        trip: store.getState().trip,
         routing: store.getState().routing,
+        trip: store.getState().trip,
+        user: store.getState().user
       });
     }),
-    1000,
+    1000
   );
 
   return store;

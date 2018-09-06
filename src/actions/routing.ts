@@ -1,8 +1,8 @@
 export const ROUTE_TO_PAGE = 'ROUTE_TO_PAGE';
 
-export function routeToPage(page) {
+export function routeToPage(page: string) {
   return {
-    type: ROUTE_TO_PAGE,
     page,
+    type: ROUTE_TO_PAGE
   };
 }
