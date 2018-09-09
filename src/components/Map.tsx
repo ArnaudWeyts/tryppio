@@ -1,7 +1,7 @@
 import { Button, Icon } from 'antd';
 import * as React from 'react';
 import reactMapboxGl, { Marker } from 'react-mapbox-gl';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 const Map = reactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN || ''
@@ -17,6 +17,10 @@ class ActivityMap extends React.Component<IMapProps, IMapState> {
   }
 
   public render() {
+    if (this.props.activities.length < 1) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <Map
         style="mapbox://styles/mapbox/streets-v9"

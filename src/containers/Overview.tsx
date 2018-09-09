@@ -6,6 +6,7 @@ import { resetQuestions } from '../actions/questions';
 import { startCalculation } from '../actions/trip';
 import { resetPreferences } from '../actions/user';
 
+import { Redirect } from 'react-router';
 import { AnyAction, Dispatch } from 'redux';
 import Trip from '../components/Trip';
 import { IOverviewProps } from '../types/overview';
@@ -25,6 +26,11 @@ class Overview extends React.Component<IOverviewProps> {
 
   public render() {
     const { trip, history } = this.props;
+
+    if (trip.activities.length < 1) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div style={{ padding: '2em', height: '100%' }}>
         {trip.calculating && (

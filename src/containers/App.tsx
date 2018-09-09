@@ -6,6 +6,7 @@ import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import './App.css';
 
 import Map from '../components/Map';
+import NoMatch from '../components/NoMatch';
 import IntroForm from './IntroForm';
 import Overview from './Overview';
 
@@ -33,6 +34,7 @@ class App extends React.Component<IAppPropsExtended> {
             <Route path="/form" component={IntroForm} />
             <Route path="/overview" component={Overview} />
             <Route path="/map" render={this.renderMap} />
+            <Route component={NoMatch} />
           </Switch>
         </Content>
       </Layout>

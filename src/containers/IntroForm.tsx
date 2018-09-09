@@ -13,6 +13,7 @@ import { nextQuestion, resetQuestions } from '../actions/questions';
 import { setDates, startCalculation } from '../actions/trip';
 import { addPreference, resetPreferences } from '../actions/user';
 
+import NoMatch from '../components/NoMatch';
 import { IIntroFormProps } from './introFormType';
 
 const { RangePicker } = DatePicker;
@@ -93,6 +94,7 @@ class IntroForm extends React.Component<IIntroFormProps> {
         <Redirect from="/form" exact={true} to="/form/diagnosis" />
         <Route path="/form/diagnosis" render={() => this.renderDiagnosis()} />
         <Route path="/form/dates" render={this.renderDates} />
+        <Route component={NoMatch} />
       </Switch>
     );
   }
@@ -108,6 +110,11 @@ class IntroForm extends React.Component<IIntroFormProps> {
 
   private renderDates() {
     const { trip } = this.props;
+
+    if (this.props.user.preferences.length < 1) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div
         style={{
