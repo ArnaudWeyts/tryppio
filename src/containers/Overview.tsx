@@ -21,11 +21,11 @@ class Overview extends React.Component<IOverviewProps> {
   public resetPreferences() {
     this.props.resetPreferences();
     this.props.resetQuestions();
-    this.props.routeToPage('intro');
+    this.props.history.push('/introduction');
   }
 
   public render() {
-    const { trip, routeToPage } = this.props;
+    const { trip, history } = this.props;
     return (
       <div style={{ padding: '2em', height: '100%' }}>
         {trip.calculating && (
@@ -47,9 +47,9 @@ class Overview extends React.Component<IOverviewProps> {
         {!trip.calculating && (
           <Trip
             trip={trip}
-            calculate={() => routeToPage('date')}
+            calculate={() => history.push('/dates')}
             reset={this.resetPreferences}
-            routeToMap={() => routeToPage('map')}
+            routeToMap={() => history.push('/map')}
           />
         )}
       </div>

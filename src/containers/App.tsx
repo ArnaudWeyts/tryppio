@@ -2,6 +2,7 @@ import { Button, DatePicker, Icon, Layout } from 'antd';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { AnyAction, Dispatch } from 'redux';
 
 import './App.css';
@@ -27,25 +28,37 @@ class App extends React.Component<IAppPropsExtended> {
 
     this.answerCallback = this.answerCallback.bind(this);
     this.dateChanged = this.dateChanged.bind(this);
+    this.renderIntro = this.renderIntro.bind(this);
+    this.renderDates = this.renderDates.bind(this);
+    this.renderMap = this.renderMap.bind(this);
   }
 
   public answerCallback(answer: string) {
-    const { current, maxQuestions } = this.props.questions;
+    const {
+      questions: { current, maxQuestions },
+      user,
+      history,
+      addPreferenceDisp,
+      resetPreferencesDisp,
+      resetQuestionsDisp,
+      nextQuestionDisp
+    } = this.props;
+
     if (answer) {
-      this.props.addPreference(answer);
+      addPreferenceDisp(answer);
     }
     if (current + 1 === maxQuestions) {
       setTimeout(() => {
         // ugly way to prevent calculation when not enough preferences are linked
-        if (this.props.user.preferences.length < 1) {
+        if (user.preferences.length < 1) {
           // console.log('not enough preferences linked');
-          this.props.resetPreferences();
-          this.props.resetQuestions();
-          this.props.routeToPage('intro');
+          resetPreferencesDisp();
+          resetQuestionsDisp();
+          history.push('/intro');
           return;
         }
         let timeBlocks: string[] = [];
-        this.props.user.preferences.forEach(pref => {
+        user.preferences.forEach(pref => {
           timeBlocks = [
             ...timeBlocks,
             ...preferencesJson.categories[pref].timeBlocks
@@ -59,15 +72,15 @@ class App extends React.Component<IAppPropsExtended> {
           )
         ) {
           // console.log('not enough preferences for every time block');
-          this.props.resetPreferences();
-          this.props.resetQuestions();
-          this.props.routeToPage('intro');
+          resetPreferencesDisp();
+          resetQuestionsDisp();
+          history.push('/intro');
           return;
         }
-        this.props.routeToPage('date');
+        history.push('/dates');
       }, 50);
     } else {
-      this.props.nextQuestion();
+      nextQuestionDisp();
     }
   }
 
@@ -76,71 +89,74 @@ class App extends React.Component<IAppPropsExtended> {
       return;
     }
     this.props.setDates(dateStrings);
-    this.props.calculateTrip();
-    this.props.routeToPage('overview');
+    this.props.calculateTripDisp();
+    this.props.history.push('/overview');
   }
 
   public render() {
-    const {
-      routing: { page },
-      questions,
-      trip
-    } = this.props;
-
     return (
-      <div className="App">
-        <Layout>
-          <Content style={{ height: '100vh' }}>
-            {page === 'intro' && (
-              <Intro questions={questions} answer={this.answerCallback} />
-            )}
-            {page === 'date' && (
-              <div
-                style={{
-                  alignItems: 'center',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: '100%',
-                  justifyContent: 'center'
-                }}
-              >
-                <RangePicker
-                  onChange={this.dateChanged}
-                  value={
-                    (trip.dates.arrival &&
-                      trip.dates.leave && [
-                        moment(trip.dates.arrival),
-                        moment(trip.dates.leave)
-                      ]) ||
-                    undefined
-                  }
-                />
-                {trip.dates.arrival && (
-                  <Button
-                    style={{ marginTop: '1em' }}
-                    type="primary"
-                    size="large"
-                    onClick={() => {
-                      this.props.calculateTrip();
-                      this.props.routeToPage('overview');
-                    }}
-                  >
-                    Use previous dates <Icon type="right" />
-                  </Button>
-                )}
-              </div>
-            )}
-            {page === 'overview' && <Overview />}
-            {page === 'map' && (
-              <Map
-                activities={trip.activities}
-                routeToOverview={() => this.props.routeToPage('overview')}
-              />
-            )}
-          </Content>
-        </Layout>
+      <Layout>
+        <Content style={{ height: '100vh', textAlign: 'center' }}>
+          <Switch>
+            <Route exact={true} path="/" render={this.renderIntro} />
+            <Route path="/introduction" render={this.renderIntro} />
+            <Route path="/dates" render={this.renderDates} />
+            <Route path="/overview" component={Overview} />
+            <Route path="/map" render={this.renderMap} />
+          </Switch>
+        </Content>
+      </Layout>
+    );
+  }
+
+  private renderIntro() {
+    return (
+      <Intro questions={this.props.questions} answer={this.answerCallback} />
+    );
+  }
+
+  private renderDates() {
+    const { trip } = this.props;
+    return (
+      <div
+        style={{
+          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          justifyContent: 'center'
+        }}
+      >
+        <RangePicker
+          onChange={this.dateChanged}
+          value={
+            (trip.dates.arrival &&
+              trip.dates.leave && [
+                moment(trip.dates.arrival),
+                moment(trip.dates.leave)
+              ]) ||
+            undefined
+          }
+        />
+        {trip.dates.arrival && (
+          <Button
+            style={{ marginTop: '1em' }}
+            type="primary"
+            size="large"
+            onClick={() => {
+              this.props.calculateTripDisp();
+              this.props.history.push('/overview');
+            }}
+          >
+            Use previous dates <Icon type="right" />
+          </Button>
+        )}
       </div>
     );
+  }
+
+  private renderMap() {
+    return <Map activities={this.props.trip.activities} />;
   }
 }
 
@@ -152,16 +168,19 @@ const mapStateToProps = (state: IState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction> | any) => ({
-  addPreference: (preference: string) => dispatch(addPreference(preference)),
-  calculateTrip: () => dispatch(startCalculation()),
-  nextQuestion: () => dispatch(nextQuestion()),
-  resetPreferences: () => dispatch(resetPreferences()),
-  resetQuestions: () => dispatch(resetQuestions()),
+  addPreferenceDisp: (preference: string) =>
+    dispatch(addPreference(preference)),
+  calculateTripDisp: () => dispatch(startCalculation()),
+  nextQuestionDisp: () => dispatch(nextQuestion()),
+  resetPreferencesDisp: () => dispatch(resetPreferences()),
+  resetQuestionsDisp: () => dispatch(resetQuestions()),
   routeToPage: (page: string) => dispatch(routeToPage(page)),
   setDates: (dates: string[]) => dispatch(setDates(dates))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);
