@@ -2,8 +2,7 @@ import { Layout } from 'antd';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
-
-import './App.css';
+import styled from 'styled-components';
 
 import Map from '../components/Map';
 import NoMatch from '../components/NoMatch';
@@ -12,7 +11,12 @@ import Overview from './Overview';
 
 import { IAppPropsExtended } from '../types/app';
 
-const { Content } = Layout;
+let { Content } = Layout;
+
+Content = styled(Content)`
+  height: 100vh;
+  text-align: center;
+`;
 
 class App extends React.Component<IAppPropsExtended> {
   constructor(props: IAppPropsExtended) {
@@ -24,7 +28,7 @@ class App extends React.Component<IAppPropsExtended> {
   public render() {
     return (
       <Layout>
-        <Content style={{ height: '100vh', textAlign: 'center' }}>
+        <Content>
           <Switch>
             <Route
               exact={true}

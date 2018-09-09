@@ -2,10 +2,16 @@ import { Button, Icon } from 'antd';
 import * as React from 'react';
 import reactMapboxGl, { Marker } from 'react-mapbox-gl';
 import { Link, Redirect } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Map = reactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN || ''
 });
+
+const BackButton = styled(Button as any)`
+  position: absolute;
+  margin: 1.25em;
+`;
 
 class ActivityMap extends React.Component<IMapProps, IMapState> {
   constructor(props: IMapProps) {
@@ -30,8 +36,7 @@ class ActivityMap extends React.Component<IMapProps, IMapState> {
       >
         <React.Fragment>
           <Link to="/overview">
-            <Button
-              style={{ position: 'absolute', margin: '1.25em' }}
+            <BackButton
               type="primary"
               shape="circle"
               icon="caret-left"

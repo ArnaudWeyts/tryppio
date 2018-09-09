@@ -1,16 +1,22 @@
 import { Spin } from 'antd';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
+import { AnyAction, Dispatch } from 'redux';
+import styled from 'styled-components';
 
 import { resetQuestions } from '../actions/questions';
 import { startCalculation } from '../actions/trip';
 import { resetPreferences } from '../actions/user';
 
-import { Redirect } from 'react-router';
-import { AnyAction, Dispatch } from 'redux';
 import Trip from '../components/Trip';
+import { LayoutCentered } from '../shared/styles';
 import { IOverviewProps } from '../types/overview';
 
+const Container = styled.div`
+  padding: 2em;
+  height: 100%;
+`;
 class Overview extends React.Component<IOverviewProps> {
   constructor(props: IOverviewProps) {
     super(props);
@@ -32,22 +38,15 @@ class Overview extends React.Component<IOverviewProps> {
     }
 
     return (
-      <div style={{ padding: '2em', height: '100%' }}>
+      <Container>
         {trip.calculating && (
-          <div
-            style={{
-              alignItems: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              height: '100%',
-              justifyContent: 'center'
-            }}
-          >
+          <LayoutCentered>
+            >
             <h2 style={{ marginBottom: '3em' }}>
               Planning your perfect trip...
             </h2>
             <Spin size="large" />
-          </div>
+          </LayoutCentered>
         )}
         {!trip.calculating && (
           <Trip
@@ -57,7 +56,7 @@ class Overview extends React.Component<IOverviewProps> {
             routeToMap={() => history.push('/map')}
           />
         )}
-      </div>
+      </Container>
     );
   }
 }

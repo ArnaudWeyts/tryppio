@@ -4,6 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { AnyAction, Dispatch } from 'redux';
+import styled from 'styled-components';
 
 import Diagnosis from '../components/Diagnosis';
 
@@ -16,7 +17,13 @@ import { addPreference, resetPreferences } from '../actions/user';
 import NoMatch from '../components/NoMatch';
 import { IIntroFormProps } from './introFormType';
 
+import { LayoutCentered } from '../shared/styles';
+
 const { RangePicker } = DatePicker;
+
+const ButtonPreviousDates = styled(Button as any)`
+  margin-top: 1em;
+`;
 
 class IntroForm extends React.Component<IIntroFormProps> {
   constructor(props: IIntroFormProps) {
@@ -116,15 +123,7 @@ class IntroForm extends React.Component<IIntroFormProps> {
     }
 
     return (
-      <div
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          justifyContent: 'center'
-        }}
-      >
+      <LayoutCentered>
         <RangePicker
           onChange={this.dateChanged}
           value={
@@ -137,8 +136,7 @@ class IntroForm extends React.Component<IIntroFormProps> {
           }
         />
         {trip.dates.arrival && (
-          <Button
-            style={{ marginTop: '1em' }}
+          <ButtonPreviousDates
             type="primary"
             size="large"
             onClick={() => {
@@ -147,9 +145,9 @@ class IntroForm extends React.Component<IIntroFormProps> {
             }}
           >
             Use previous dates <Icon type="right" />
-          </Button>
+          </ButtonPreviousDates>
         )}
-      </div>
+      </LayoutCentered>
     );
   }
 }
