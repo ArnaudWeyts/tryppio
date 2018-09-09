@@ -27,7 +27,7 @@ class Overview extends React.Component<IOverviewProps> {
   public render() {
     const { trip, history } = this.props;
 
-    if (trip.activities.length < 1) {
+    if (!trip.calculating && trip.activities.length < 1) {
       return <Redirect to="/" />;
     }
 
