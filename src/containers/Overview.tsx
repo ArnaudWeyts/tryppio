@@ -3,10 +3,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { resetQuestions } from '../actions/questions';
-import { routeToPage as routeToPageDisp } from '../actions/routing';
 import { startCalculation } from '../actions/trip';
 import { resetPreferences } from '../actions/user';
 
+import { Redirect } from 'react-router';
 import { AnyAction, Dispatch } from 'redux';
 import Trip from '../components/Trip';
 import { IOverviewProps } from '../types/overview';
@@ -21,11 +21,16 @@ class Overview extends React.Component<IOverviewProps> {
   public resetPreferences() {
     this.props.resetPreferences();
     this.props.resetQuestions();
-    this.props.routeToPage('intro');
+    this.props.history.push('/form/diagnosis');
   }
 
   public render() {
-    const { trip, routeToPage } = this.props;
+    const { trip, history } = this.props;
+
+    if (trip.activities.length < 1) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div style={{ padding: '2em', height: '100%' }}>
         {trip.calculating && (
@@ -47,9 +52,9 @@ class Overview extends React.Component<IOverviewProps> {
         {!trip.calculating && (
           <Trip
             trip={trip}
-            calculate={() => routeToPage('date')}
+            calculate={() => history.push('/form/dates')}
             reset={this.resetPreferences}
-            routeToMap={() => routeToPage('map')}
+            routeToMap={() => history.push('/map')}
           />
         )}
       </div>
@@ -64,8 +69,7 @@ const mapStateToProps = (state: IState) => ({
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction> | any) => ({
   calculateTrip: () => dispatch(startCalculation()),
   resetPreferences: () => dispatch(resetPreferences()),
-  resetQuestions: () => dispatch(resetQuestions()),
-  routeToPage: (page: string) => dispatch(routeToPageDisp(page))
+  resetQuestions: () => dispatch(resetQuestions())
 });
 
 export default connect(

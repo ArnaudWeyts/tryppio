@@ -1,6 +1,7 @@
 import { Button, Icon } from 'antd';
 import * as React from 'react';
 import reactMapboxGl, { Marker } from 'react-mapbox-gl';
+import { Link, Redirect } from 'react-router-dom';
 
 const Map = reactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_TOKEN || ''
@@ -16,25 +17,27 @@ class ActivityMap extends React.Component<IMapProps, IMapState> {
   }
 
   public render() {
+    if (this.props.activities.length < 1) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <Map
         style="mapbox://styles/mapbox/streets-v9"
-        containerStyle={{
-          height: '100vh',
-          width: '100vw'
-        }}
+        containerStyle={{ height: '100vh', width: '100vw' }}
         maxBounds={[[3.663866, 51.019584], [3.779481, 51.094461]]}
         onStyleLoad={map => this.setState({ map })}
       >
         <React.Fragment>
-          <Button
-            onClick={this.props.routeToOverview}
-            style={{ position: 'absolute', margin: '1.25em' }}
-            type="primary"
-            shape="circle"
-            icon="caret-left"
-            size="large"
-          />
+          <Link to="/overview">
+            <Button
+              style={{ position: 'absolute', margin: '1.25em' }}
+              type="primary"
+              shape="circle"
+              icon="caret-left"
+              size="large"
+            />
+          </Link>
           {this.props.activities.map(({ activity }) => (
             <Marker
               key={activity.name}
