@@ -1,6 +1,5 @@
 interface IState {
   questions: IQuestions;
-  routing: IRouting;
   trip: ITrip;
   user: IUser;
 }
@@ -9,10 +8,6 @@ interface IQuestions {
   current: number;
   maxQuestions: number;
   progressPercent: number;
-}
-
-interface IRouting {
-  page: string;
 }
 
 interface ITrip {

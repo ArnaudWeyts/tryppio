@@ -3,7 +3,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { resetQuestions } from '../actions/questions';
-import { routeToPage as routeToPageDisp } from '../actions/routing';
 import { startCalculation } from '../actions/trip';
 import { resetPreferences } from '../actions/user';
 
@@ -21,7 +20,7 @@ class Overview extends React.Component<IOverviewProps> {
   public resetPreferences() {
     this.props.resetPreferences();
     this.props.resetQuestions();
-    this.props.history.push('/introduction');
+    this.props.history.push('/form/diagnosis');
   }
 
   public render() {
@@ -47,7 +46,7 @@ class Overview extends React.Component<IOverviewProps> {
         {!trip.calculating && (
           <Trip
             trip={trip}
-            calculate={() => history.push('/dates')}
+            calculate={() => history.push('/form/dates')}
             reset={this.resetPreferences}
             routeToMap={() => history.push('/map')}
           />
@@ -64,8 +63,7 @@ const mapStateToProps = (state: IState) => ({
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction> | any) => ({
   calculateTrip: () => dispatch(startCalculation()),
   resetPreferences: () => dispatch(resetPreferences()),
-  resetQuestions: () => dispatch(resetQuestions()),
-  routeToPage: (page: string) => dispatch(routeToPageDisp(page))
+  resetQuestions: () => dispatch(resetQuestions())
 });
 
 export default connect(

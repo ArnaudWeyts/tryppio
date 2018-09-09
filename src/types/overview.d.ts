@@ -6,5 +6,4 @@ interface IOverviewProps extends RouteComponentProps<any> {
   calculateTrip: () => Dispatch<AnyAction>;
   resetPreferences: () => Dispatch<AnyAction>;
   resetQuestions: () => Dispatch<AnyAction>;
-  routeToPage: (page: string) => Dispatch<AnyAction>;
 }
