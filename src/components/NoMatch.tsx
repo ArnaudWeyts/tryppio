@@ -2,16 +2,11 @@ import { Button } from 'antd';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+import { LayoutCentered } from '../shared/styles';
+
 const NoMatch = () => {
   return (
-    <div
-      style={{
-        alignItems: 'center',
-        display: 'flex',
-        height: '100%',
-        justifyContent: 'center'
-      }}
-    >
+    <LayoutCentered>
       <div>
         <h2>Sorry, we couldn't find that page 🤔</h2>
         <Link to="/">
@@ -20,7 +15,7 @@ const NoMatch = () => {
           </Button>
         </Link>
       </div>
-    </div>
+    </LayoutCentered>
   );
 };
 
