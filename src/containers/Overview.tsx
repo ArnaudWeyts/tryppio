@@ -41,7 +41,6 @@ class Overview extends React.Component<IOverviewProps> {
       <Container>
         {trip.calculating && (
           <LayoutCentered>
-            >
             <h2 style={{ marginBottom: '3em' }}>
               Planning your perfect trip...
             </h2>
