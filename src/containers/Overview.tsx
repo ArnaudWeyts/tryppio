@@ -2,7 +2,6 @@ import { Spin } from 'antd';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { AnyAction, Dispatch } from 'redux';
 import styled from 'styled-components';
 
 import { resetQuestions } from '../actions/questions';
@@ -64,11 +63,11 @@ const mapStateToProps = (state: IState) => ({
   trip: state.trip
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction> | any) => ({
-  calculateTrip: () => dispatch(startCalculation()),
-  resetPreferences: () => dispatch(resetPreferences()),
-  resetQuestions: () => dispatch(resetQuestions())
-});
+const mapDispatchToProps = {
+  resetPreferences,
+  resetQuestions,
+  startCalculation
+};
 
 export default connect(
   mapStateToProps,

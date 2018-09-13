@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 
 interface IOverviewProps extends RouteComponentProps<any> {
   trip: ITrip;
-  calculateTrip: () => Dispatch<AnyAction>;
-  resetPreferences: () => Dispatch<AnyAction>;
-  resetQuestions: () => Dispatch<AnyAction>;
+  startCalculation: () => any;
+  resetPreferences: () => { type: string };
+  resetQuestions: () => { type: string };
 }

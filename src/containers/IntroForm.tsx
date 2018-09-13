@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { AnyAction, Dispatch } from 'redux';
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import styled from 'styled-components';
 
 import Diagnosis from '../components/Diagnosis';
@@ -39,8 +39,8 @@ class IntroForm extends React.Component<IIntroFormProps> {
     if (dateStrings[0] === '' || dateStrings[1] === '') {
       return;
     }
-    this.props.setDates(dateStrings);
-    this.props.calculateTripDisp();
+    this.props.tripActions.setDates(dateStrings);
+    this.props.tripActions.startCalculation();
     this.props.history.push('/overview');
   }
 
@@ -49,22 +49,20 @@ class IntroForm extends React.Component<IIntroFormProps> {
       questions: { current, maxQuestions },
       user,
       history,
-      addPreferenceDisp,
-      resetPreferencesDisp,
-      resetQuestionsDisp,
-      nextQuestionDisp
+      userActions,
+      questionActions
     } = this.props;
 
     if (answer) {
-      addPreferenceDisp(answer);
+      userActions.addPreference(answer);
     }
     if (current + 1 === maxQuestions) {
       setTimeout(() => {
         // ugly way to prevent calculation when not enough preferences are linked
         if (user.preferences.length < 1) {
           // console.log('not enough preferences linked');
-          resetPreferencesDisp();
-          resetQuestionsDisp();
+          userActions.resetPreferences();
+          questionActions.resetQuestions();
           history.push('/form/diagnosis');
           return;
         }
@@ -83,15 +81,15 @@ class IntroForm extends React.Component<IIntroFormProps> {
           )
         ) {
           // console.log('not enough preferences for every time block');
-          resetPreferencesDisp();
-          resetQuestionsDisp();
+          userActions.resetPreferences();
+          questionActions.resetQuestions();
           history.push('/form/diagnosis');
           return;
         }
         history.push('/form/dates');
       }, 50);
     } else {
-      nextQuestionDisp();
+      questionActions.nextQuestion();
     }
   }
 
@@ -140,7 +138,7 @@ class IntroForm extends React.Component<IIntroFormProps> {
             type="primary"
             size="large"
             onClick={() => {
-              this.props.calculateTripDisp();
+              this.props.tripActions.startCalculation();
               this.props.history.push('/overview');
             }}
           >
@@ -158,15 +156,19 @@ const mapStateToProps = (state: IState) => ({
   user: state.user
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction> | any) => ({
-  addPreferenceDisp: (preference: string) =>
-    dispatch(addPreference(preference)),
-  calculateTripDisp: () => dispatch(startCalculation()),
-  nextQuestionDisp: () => dispatch(nextQuestion()),
-  resetPreferencesDisp: () => dispatch(resetPreferences()),
-  resetQuestionsDisp: () => dispatch(resetQuestions()),
-  setDates: (dates: string[]) => dispatch(setDates(dates))
-});
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+  return {
+    questionActions: bindActionCreators(
+      { nextQuestion, resetQuestions },
+      dispatch
+    ),
+    tripActions: bindActionCreators({ startCalculation, setDates }, dispatch),
+    userActions: bindActionCreators(
+      { addPreference, resetPreferences },
+      dispatch
+    )
+  };
+};
 
 export default connect(
   mapStateToProps,
