@@ -1,13 +1,16 @@
 import { Layout } from 'antd';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Map from '../components/Map';
 import NoMatch from '../components/NoMatch';
+import Splash from '../components/Splash';
 import IntroForm from './IntroForm';
+import Login from './Login';
 import Overview from './Overview';
+import Signup from './Signup';
 
 import { IAppPropsExtended } from '../types/app';
 
@@ -30,11 +33,9 @@ class App extends React.Component<IAppPropsExtended> {
       <Layout>
         <Content>
           <Switch>
-            <Route
-              exact={true}
-              path="/"
-              render={() => <Redirect to="/form" />}
-            />
+            <Route exact={true} path="/" component={Splash} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
             <Route path="/form" component={IntroForm} />
             <Route path="/overview" component={Overview} />
             <Route path="/map" render={this.renderMap} />
