@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { injectGlobal } from 'styled-components';
-import configureStore from './store/configureStore';
+import configureStore from './helpers/configureStore';
 
 import App from './containers/App';
 

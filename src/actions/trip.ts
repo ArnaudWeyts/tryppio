@@ -10,8 +10,8 @@ import {
   IToggleCalculatingAction
 } from '../types/actions';
 
-import FoursquareAPI from '../FoursquareAPI';
-import GoogleAPI from '../GoogleAPI';
+import FoursquareAPI from '../services/FoursquareAPI';
+import GoogleAPI from '../services/GoogleAPI';
 
 import preferencesJson from '../preferences.json';
 

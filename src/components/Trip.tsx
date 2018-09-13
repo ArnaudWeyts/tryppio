@@ -2,8 +2,8 @@ import { Button, Timeline } from 'antd';
 import * as React from 'react';
 import styled from 'styled-components';
 
-import transitSvg from './img/transit.svg';
-import walkingSvg from './img/walking.svg';
+import transitSvg from '../img/transit.svg';
+import walkingSvg from '../img/walking.svg';
 
 const Container = styled.div`
   display: flex;

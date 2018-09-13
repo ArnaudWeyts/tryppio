@@ -18,7 +18,6 @@ let { Content } = Layout;
 
 Content = styled(Content)`
   height: 100vh;
-  text-align: center;
 `;
 
 class App extends React.Component<IAppPropsExtended> {
