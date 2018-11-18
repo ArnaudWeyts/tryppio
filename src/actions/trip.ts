@@ -70,7 +70,7 @@ function sortActivities(
   };
 }
 
-function addTravelTimes(index: number, times: string[]): IAddTravelTimesAction {
+function addTravelTimes(index: number, times: any): IAddTravelTimesAction {
   return {
     index,
     times,

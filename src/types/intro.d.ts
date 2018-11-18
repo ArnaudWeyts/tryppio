@@ -1,4 +1,4 @@
 interface IIntroProps {
   questions: IQuestions;
-  answer: (anwser: string | boolean) => void;
+  answer: (anwser: string | false) => void;
 }

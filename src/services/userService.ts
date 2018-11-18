@@ -1,4 +1,4 @@
-// import config from 'config';
+/* import config from 'config';
 import { authHeader } from '../helpers/authHeader';
 
 const userService = {
@@ -14,13 +14,15 @@ const userService = {
 export default userService;
 
 function login(username: string, password: string) {
-  const requestOptions = {
+   const requestOptions = {
     body: JSON.stringify({ username, password }),
     headers: { 'Content-Type': 'application/json' },
     method: 'POST'
   };
 
-  /*return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+  return new Promise(resolve => resolve(false));
+
+  return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
     .then(handleResponse)
     .then(user => {
       // login successful if there's a jwt token in the response
@@ -30,7 +32,7 @@ function login(username: string, password: string) {
       }
 
       return user;
-    });*/
+    });
 }
 
 function logout() {
@@ -53,9 +55,9 @@ function getById(id: number) {
     method: 'GET'
   };
 
-  /*return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(
+  return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(
     handleResponse
-  );*/
+  );
 }
 
 function register(user: { username: string; password: string }) {
@@ -65,9 +67,9 @@ function register(user: { username: string; password: string }) {
     method: 'POST'
   };
 
-  /*return fetch(`${config.apiUrl}/users/register`, requestOptions).then(
+  return fetch(`${config.apiUrl}/users/register`, requestOptions).then(
     handleResponse
-  );*/
+  );
 }
 
 function update(user: { id: number; username: string; password: string }) {
@@ -77,9 +79,9 @@ function update(user: { id: number; username: string; password: string }) {
     method: 'PUT'
   };
 
-  /*return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(
+  return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(
     handleResponse
-  );*/
+  );
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -91,7 +93,7 @@ function _delete(id: number) {
 
   /*return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(
     handleResponse
-  );*/
+  );
 }
 
 function handleResponse(response: any) {
@@ -111,3 +113,5 @@ function handleResponse(response: any) {
     return data;
   });
 }
+
+*/

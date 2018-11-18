@@ -1,5 +1,5 @@
 import { Button, DatePicker, Icon } from 'antd';
-import * as moment from 'moment';
+import moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -44,7 +44,7 @@ class IntroForm extends React.Component<IIntroFormProps> {
     this.props.history.push('/overview');
   }
 
-  public answerCallback(answer: string) {
+  public answerCallback(answer: string | false) {
     const {
       questions: { current, maxQuestions },
       user,

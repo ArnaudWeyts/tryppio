@@ -38,7 +38,7 @@ export default class GoogleAPI {
       destination.lng
     );
 
-    const requests: any[] = [];
+    const requests: Promise<{}>[] = [];
 
     // Allows for multiple modes to be defined
     modes.forEach(mode => {

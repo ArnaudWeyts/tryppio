@@ -1,6 +1,6 @@
-import { AnyAction, Dispatch } from 'redux';
+// import { AnyAction, Dispatch } from 'redux';
 
-import userService from '../services/userService';
+// import userService from '../services/userService';
 
 export const ADD_PREFERENCE = 'ADD_PREFERENCE';
 export const RESET_PREFERENCES = 'RESET_PREFERENCES';
@@ -19,12 +19,16 @@ export function resetPreferences() {
   };
 }
 
-export function login(username: string, password: string) {
+/**  export function login(username: string, password: string) {
   return (dispatch: Dispatch<AnyAction>) => {
-    dispatch(request({ username }));
+    dispatch(
+      request({
+        username
+      })
+    );
 
     userService.login(username, password).then(
-      user => {
+      (user: any) => {
         dispatch(success(user));
         // `history.push('/');
       },
@@ -44,4 +48,4 @@ export function login(username: string, password: string) {
       return { error, type: 'LOGIN_FAILURE,' };
     }
   };
-}
+}*/

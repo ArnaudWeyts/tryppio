@@ -9,6 +9,8 @@ import App from './containers/App';
 
 import registerServiceWorker from './registerServiceWorker';
 
+import './App.css';
+
 // tslint:disable-next-line:no-unused-expression
 injectGlobal`
   body {
